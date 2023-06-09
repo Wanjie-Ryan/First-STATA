@@ -94,8 +94,12 @@
 		label define malecontraslabel 34 "Yes" 78 "No"
 		label define school_label 99 "Secondary/'A' 5Level" 29 "College (Middle Level)" 39 "Primary" 49 "University" 19 "Post-Primary/Vocational" 
 		label define methods_label 45 "IUD" 90 "female_condoms rhythm" 12 "injectables" 22 "implants" 33 "male_condoms" 87 "LAM" 55 "pill" 47 "withdrawal rhythm" 22 "female_sterilization" 33 " implants pill" 17 "beads"
+		label define have_Insurance_label 33 "No" 44 "Yes"
+		label define used_Insurance_label 33 "No" 44 "Yes" 
+		label define Enum_Area_label 12 "EMALI_CENTRAL" 34 "ISHAMBA_KWA_MUSEU_GLORIOUS" 55 "KALULINI_KASEVE" 9 "KANUNDU" 8 "KAVILA_IUNI" 67 "KAVUKUNI" 47 "KIKIMA_A" 66 "KIU_SAFARI_B" 21 "KIVUUTINI_NZOUNI_KAMBILI" 53 "KWAMBULA" 49 "KWA_SISAL" 13 "KYAKATHUNGU_UKETA" 59 "KYANDUE" 77 " KYUUNI" 71 "MATONDONI"  73 "MAULUNI_MAANGI_UVUNGU_MUANGENI_KALULUINI" 98 "MIKAMENI_KATHIANI " 88 "MUUSINI_MUKAME" ///
+		101 "NGAMYONE_KATULUKI_TAITI" 102 "NTHONGONI" 105 "NZOILA" 110 "SHIMO" 111 "TAWA"  115 "TOWNSHIP_B" 199 "UNOA_RURAL" 221 "YIMWAMBA_MUTHINGITHO"
 		
-		
+// 		-65 "-"
 
 	//	label values
 	
@@ -142,34 +146,88 @@
 		
 		encode current_method, gen(new_current_method) lab(methods_label)
 		order new_current_method, after(current_method)
+		drop current_method
+		rename new_current_method current_method
+		tab current_method, mi  
 		
-		* continue from here
+		
+	// Label for having an insurance
+	
+		
+		encode have_Insurance, gen(new_have_Insurance) lab(have_Insurance_label) 
+		order new_have_Insurance, after(have_Insurance)
+		drop have_Insurance
+		rename new_have_Insurance have_Insurance
+		tab have_Insurance, mi nol
+		
+		
+	// Label for used insurance
+	
+		
+		encode used_Insurance, gen(new_used_Insurance) lab(used_Insurance_label)
+		order new_used_Insurance, after(used_Insurance)
+		drop used_Insurance
+		rename new_used_Insurance used_Insurance
+		tab used_Insurance, mi nol
+		
+		
+	// Label for enumaration area
+	
+		encode Enum_Area, gen(new_Enum_Area) lab(Enum_Area_label)
+		order new_Enum_Area, after(Enum_Area)
+		drop Enum_Area
+		rename new_Enum_Area Enum_Area
+		tab Enum_Area, nol
 
 	
 	
 
 
-
-
-
-
-	// Transform mcp and cp to a categorical format
+	// Transform FQ_age and age at first sex to a categorical format
+	
+	
+		egen age_group_3 = cut(F_Age), at(15 17 24 49)
+		egen age_group_4 = cut(F_Age), at()
+		
+// 		sum F_Age
+	
+	
+	
+	
 
 
 	//	Generate dichotomous "in-union" variable to represent all women married or currently living with a man
+	
+	
+	
+	
+	
 
+	
+	
 
 	//	Generate age categories from FQ_age
+	
+	
+	
+	
 
 
 
 	// 	Save the clean dataset 
+	
+	
+	
 
 
 	//	Step 6: Basic Analysis and interpratation
 
 
 	//	Run basic frequencies
+	
+	
+	
+	
 
 
 	////////////////// THE END //////////////////	
