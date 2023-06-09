@@ -99,6 +99,12 @@
 		label define Enum_Area_label 12 "EMALI_CENTRAL" 34 "ISHAMBA_KWA_MUSEU_GLORIOUS" 55 "KALULINI_KASEVE" 9 "KANUNDU" 8 "KAVILA_IUNI" 67 "KAVUKUNI" 47 "KIKIMA_A" 66 "KIU_SAFARI_B" 21 "KIVUUTINI_NZOUNI_KAMBILI" 53 "KWAMBULA" 49 "KWA_SISAL" 13 "KYAKATHUNGU_UKETA" 59 "KYANDUE" 77 " KYUUNI" 71 "MATONDONI"  73 "MAULUNI_MAANGI_UVUNGU_MUANGENI_KALULUINI" 98 "MIKAMENI_KATHIANI " 88 "MUUSINI_MUKAME" ///
 		101 "NGAMYONE_KATULUKI_TAITI" 102 "NTHONGONI" 105 "NZOILA" 110 "SHIMO" 111 "TAWA"  115 "TOWNSHIP_B" 199 "UNOA_RURAL" 221 "YIMWAMBA_MUTHINGITHO"
 		
+		
+		
+		label define Agelab 15 "15-17 Yrs" 18 "18-24 Yrs" 24 "25+ Yrs"
+
+		
+		
 // 		-65 "-"
 
 	//	label values
@@ -184,8 +190,6 @@
 
 
 	// Transform FQ_age and age at first sex to a categorical format
-	
-	
 		gen age_group_3=0
 		replace age_group_3 =15 if F_Age >14 & F_Age <18
 		replace age_group_3 =18 if F_Age >17 & F_Age <25
@@ -193,21 +197,18 @@
 		assert age_group_3 ==. if F_Age ==.
 		tab F_Age age_group_3 
 		
+	//	assign labels 
+		label values age_group_3 Agelab
+		33
+		
+		// OR
+		
 		capture drop  age_group_3v2
 		egen age_group_3v2 =cut(F_Age), at(15(5)50)
 		tab F_Age age_group_3v2
 		
 	
-		egen age_group_3 = group(F_Age), cut(15 17 24 49)
-		
-// 		egen age_group_3 = group(F_Age > 14 & F_Age <= 17) + 2 * (F_Age > 17 & F_Age <= 24) + 3 * (F_Age > 24 & F_Age <= 49)
-
-// 		drop age_group_3
-		egen age_group_4 = cut(F_Age), at(15 19 24 29 34 39 45 )
-		
-		sum F_Age, by age_group_3
-		
-// 		sum F_Age
+	
 	
 	
 	
