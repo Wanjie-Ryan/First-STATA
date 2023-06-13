@@ -273,29 +273,24 @@
 		tabulate in_union, m
 		tabulate F_Marital_Status in_union, m
 
-
-
-
 		//	Step 6: Basic Analysis and interpratation 
 		
-		
 		* Step 6.1 - What is the proportion of married women that are currently using a modern contraceptive method?
-
+				
 				tab in_union
 			    tab in_union Modern_CP
-				tab in_union Modern_CP, row
-				tab in_union Modern_CP, column
+				tab Modern_CP in_union, col
+				tab Modern_CP in_union 
+				
+				// depends on where the 100 is, if it is column-wise, start with coulm then go to row
+				
+				// if 100 is in row, read row then column.
 				
 				
-				// 52 out of 73 married use modern contraceptives, or 71.23% of married people
+				// 71.23% of married women are currently using a moden method of contraception
 	
 	
 		* Step 6.2 - What is the median age for the participants in this sample?
-		
-				tab F_Age
-				
-				sum F_Age
-				
 				sum F_Age,detail
 				
 				// 31 is the median age 
@@ -304,17 +299,26 @@
 
 
 		* Step 6.3 - What is the relationship of schooling on modern contraceptive use among married women?
-		
 			tab Modern_CP
-			tab1 school Modern_CP in_union  
-
-
+			tab school Modern_CP if in_union  ==1, col
+			
+			
 		* Step 6.4 - What is the proportion of All women that are currently using a modern contraceptive method?
+		
+			tab F_Marital_Status Modern_CP
+			tab in_union Modern_CP, row
+			
+			//67 out of 130 women or 51.54% of women use modern contraceptive methods
 
 
 		* Step 6.5 - What is the dominant method of contraception among the women presented in this dataset?
-
-
+			tab current_method
+			
+			//injectables are the most dominant method of contraception with a frequncy of 23
+			
+			tab current_method age_group_3, col nofreq
+		
+		
 		// 	Save the clean dataset 
 
 		save "E:\Programming\Stata\ICRHK-Practice data", replace	
