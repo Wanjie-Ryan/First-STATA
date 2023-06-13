@@ -261,9 +261,9 @@
 		//	Generate dichotomous "in-union" variable to represent all women married or currently living with a man
 		label define maritalstatuslab 1 "Married" 0 "Not Married"
 
-		gen inunion_A =(F_Marital_Status ==3 | F_Marital_Status ==2)
+// 		gen inunion_A =(F_Marital_Status ==3 | F_Marital_Status ==2)
 
-		srhsf
+// 		srhsf
 
 		capture drop in_union
 		gen in_union = 0
@@ -277,19 +277,42 @@
 
 
 		//	Step 6: Basic Analysis and interpratation 
+		
+		
 		* Step 6.1 - What is the proportion of married women that are currently using a modern contraceptive method?
 
+				tab in_union
+			    tab in_union Modern_CP
+				tab in_union Modern_CP, row
+				tab in_union Modern_CP, column
+				
+				
+				// 52 out of 73 married use modern contraceptives, or 71.23% of married people
+	
+	
+		* Step 6.2 - What is the median age for the participants in this sample?
+		
+				tab F_Age
+				
+				sum F_Age
+				
+				sum F_Age,detail
+				
+				// 31 is the median age 
+				
+// 				sum F_Age centile(50)
 
-		* Step 6.1 - What is the median age for the participants in this sample?
+
+		* Step 6.3 - What is the relationship of schooling on modern contraceptive use among married women?
+		
+			tab Modern_CP
+			tab1 school Modern_CP in_union  
 
 
-		* Step 6.1 - What is the relationship of schooling on modern contraceptive use among married women?
+		* Step 6.4 - What is the proportion of All women that are currently using a modern contraceptive method?
 
 
-		* Step 6.1 - What is the proportion of All women that are currently using a modern contraceptive method?
-
-
-		* Step 6.1 - What is the dominat method of contraception among the women presented in this dataset?
+		* Step 6.5 - What is the dominant method of contraception among the women presented in this dataset?
 
 
 		// 	Save the clean dataset 
