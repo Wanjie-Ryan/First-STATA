@@ -102,6 +102,8 @@
 		
 		
 		label define Agelab 15 "15-17 Yrs" 18 "18-24 Yrs" 24 "25+ Yrs"
+		
+		label define Age_at_first_use_labels -99 "Not Mention" 10 "11-14 Yrs" 15 "15-19 Yrs" 20 "20-24 Yrs" 25 "25-29 Yrs" 30 "30-34 Yrs" 35 "35-39 Yrs" 40 "40-44 Yrs"
 
 		
 		
@@ -196,16 +198,66 @@
 		replace age_group_3 =24 if F_Age >24 & F_Age <.
 		assert age_group_3 ==. if F_Age ==.
 		tab F_Age age_group_3 
+		tab age_group_3
 		
 	//	assign labels 
 		label values age_group_3 Agelab
-		33
+// 		33
 		
 		// OR
 		
 		capture drop  age_group_3v2
 		egen age_group_3v2 =cut(F_Age), at(15(5)50)
 		tab F_Age age_group_3v2
+		
+		
+		
+		
+		// GROUPING AGE AT FIRST SEX
+		label define sexualdebutlab -99 "No response" -88 "Do not Know" 0 "never had sex" 10 "10 - 14 Yrs" 15 " 15 - 19 Yrs" 20 " 20 - 24 Yrs" 25 " 25 - 29 Yrs" 
+		
+		summ age_at_first_sex, detail
+		capture drop  sexual_debut
+		egen sexual_debut =cut(age_at_first_sex), at(10(5)30)
+		replace sexual_debut = 0 if age_at_first_sex ==-77
+		replace sexual_debut = -99 if age_at_first_sex ==-99
+		replace sexual_debut = -88 if age_at_first_sex ==-88
+		
+		* Assign labels
+		 label values sexual_debut sexualdebutlab
+		 
+		tab F_Age age_group_3v2
+		
+		sum Age_at_first_use
+		
+		gen Age_at_first_use_v1 = 0
+		replace Age_at_first_use_v1 = -99 if Age_at_first_use < 0
+		replace Age_at_first_use_v1 = 10 if Age_at_first_use > 10 & Age_at_first_use < 15
+		replace Age_at_first_use_v1 = 15 if Age_at_first_use >= 15 & Age_at_first_use < 20
+		replace Age_at_first_use_v1 = 20 if Age_at_first_use >= 20 & Age_at_first_use < 25
+		replace Age_at_first_use_v1 = 25 if Age_at_first_use >=25 & Age_at_first_use < 30
+		replace Age_at_first_use_v1 = 30 if Age_at_first_use >=30 & Age_at_first_use < 35
+		replace Age_at_first_use_v1 = 35 if Age_at_first_use >=35 & Age_at_first_use < 40
+		replace Age_at_first_use_v1 = 40 if Age_at_first_use >= 40 & Age_at_first_use < 45
+		assert Age_at_first_use_v1 ==. if Age_at_first_use ==.
+		tab Age_at_first_use_v1
+		tab Age_at_first_use Age_at_first_use_v1
+		
+		label values Age_at_first_use_v1 Age_at_first_use_labels
+		
+		tab Age_at_first_use Age_at_first_use_v1
+		
+		
+		
+		//ALTERNATIVE
+		
+		egen Age_at_first_use_v2 = -99 if Age_at_first_use
+		
+		
+		
+		
+		
+		
 		
 	
 	
